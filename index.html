@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <meta charset="UTF-8">
+        <title>Geolocalizzazione da una photo</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>Geolocalizzazione di una photo</h1>
+            <input type="file" id="photoinput" accept="image/*">
+            <p id="map"></p>
+            <div id="map"></div>
+            <input type="file" id="photoinput" />
+            <p id="coords">Coordinate : --</p>
+        </div>
+        <div id="consent-banner" class="banner">
+            <p>Questo sito usa la Geolocalizzazionee tratta i metadati dei vostri immagini. Continuando, accetti la nostra politica sulla privacy</p>
+            <button id="accept-consent">Accettare</button>
+        </div>
+
+        <script src="exif.js"></script>
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <script src="script.js"></script>
+    </body>
+</html>
