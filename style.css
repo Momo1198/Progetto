@@ -1,40 +1,209 @@
+/* 1. CSS Variables for Theming */
+:root {
+    /* Light Theme (Default) */
+    --bg-color: #f0f2f5;
+    --bg-image-overlay: rgba(240, 242, 245, 0.8);
+    --card-bg-color: #ffffff;
+    --text-primary: #1c1e21;
+    --text-secondary: #606770;
+    --button-bg: #007bff;
+    --button-hover-bg: #0056b3;
+    --input-bg: #e9ecef;
+    --input-hover-bg: #dde1e4;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --switch-bg: #c1c1c1;
+    --icon-color: #fdb813; /* Sun color */
+}
+ 
+body.dark-mode {
+    /* Dark Theme */
+    --bg-color: #121212;
+    --bg-image-overlay: rgba(18, 18, 18, 0.85);
+    --card-bg-color: #1e1e1e;
+    --text-primary: #e4e6eb;
+    --text-secondary: #b0b3b8;
+    --button-bg: #0d6efd;
+    --button-hover-bg: #0a58ca;
+    --input-bg: #3a3b3c;
+    --input-hover-bg: #4e4f50;
+    --shadow-color: rgba(0, 0, 0, 0.4);
+    --switch-bg: #0d6efd;
+    --icon-color: #f5f3ce; /* Moon color */
+}
+ 
+/* 2. General Styles */
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background: #f0f0f0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
     margin: 0;
-    padding: 0;
+    transition: background-color 0.3s, color 0.3s;
+ 
+    /*
+    =========================================
+    ===> HNA FIN KAYNA TSOUIRA DYAL NASA <===
+    =========================================
+    */
+    background-image: url('https://science.nasa.gov/wp-content/uploads/2023/11/m31-uv-optical-16x9-1.jpg');
+   
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
-.container{
-    margin-top: 40px;
-}
-#map{
-    height: 400px;
-    width: 100%;
-    margin: 20px auto;
-    display: none;
-}
-input {
-    margin-top: 20px;
-    padding: 10px;
-}
-.banner {
+ 
+/* L'overlay li kayji foq tsouira bach l'ktaba tban mezyan */
+body::before {
+    content: '';
     position: fixed;
-    bottom: 0;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: var(--bg-image-overlay);
+    z-index: -1;
+    transition: background-color 0.3s;
+}
+ 
+/* L'baqi dyal l'code bqa nafsso */
+.container {
+    background-color: var(--card-bg-color);
+    padding: 2rem 3rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px var(--shadow-color);
+    text-align: center;
+    width: 90%;
+    max-width: 500px;
+    border: 1px solid var(--input-bg);
+    transition: background-color 0.3s, border 0.3s;
+}
+header h1, header p, #result-container a { color: var(--text-primary); }
+input[type="file"] { display: none; }
+.file-label {
+    background-color: var(--input-bg);
+    color: var(--text-secondary);
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    transition: background-color 0.2s;
+}
+.file-label:hover { background-color: var(--input-hover-bg); }
+#file-name { font-style: italic; font-size: 0.9em; margin-left: 8px; }
+button {
+    background-color: var(--button-bg);
+    color: white;
+    border: none;
+    padding: 14px 25px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s, transform 0.1s;
+}
+button:hover { background-color: var(--button-hover-bg); }
+button:active { transform: scale(0.98); }
+#result-container { margin-top: 2rem; font-size: 1.1rem; word-wrap: break-word; }
+ 
+/* 3. Animated Theme Switcher Styles */
+.theme-switcher-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+ 
+.theme-switcher {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+ 
+.theme-switcher input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+ 
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
     left: 0;
     right: 0;
-    background:#222;
-    color: white;
-    padding: 15px;
-    text-align: center;
-    z-index: 1000;
-    display: none;
+    bottom: 0;
+    background-color: var(--switch-bg);
+    transition: .4s;
+    border-radius: 34px;
 }
-.banner button {
-background-color: #4CAF50;
-color: white;
-border: none;
-padding: 8px 16px;
-margin-left: 10px;
-cursor: pointer;
+ 
+.icon {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: var(--icon-color);
+    transition: .4s;
+    border-radius: 50%;
+    box-shadow: 0 0 2px var(--icon-color);
 }
+ 
+input:checked + .slider .icon {
+    transform: translateX(26px) rotate(360deg);
+    box-shadow: inset -10px -2px 0 0 var(--icon-color);
+    background-color: transparent;
+}
+ 
+ 
+// --- Theme Switcher Logic ---
+const themeToggle = document.getElementById('theme-toggle');
+const body = document.body;
+ 
+// Function to apply the saved theme on page load
+function applySavedTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        themeToggle.checked = true;
+    } else {
+        body.classList.remove('dark-mode');
+        themeToggle.checked = false;
+    }
+}
+ 
+// Event listener for the theme toggle
+themeToggle.addEventListener('change', () => {
+    if (themeToggle.checked) {
+        body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark'); // Save preference
+    } else {
+        body.classList.remove('dark-mode');
+        localStorage.setItem('theme', 'light'); // Save preference
+    }
+});
+ 
+// Apply theme when the page is loaded
+document.addEventListener('DOMContentLoaded', applySavedTheme);
+ 
+ 
+// --- File Input Logic ---
+const photoInput = document.getElementById('photo-input');
+const fileNameDisplay = document.getElementById('file-name');
+ 
+photoInput.addEventListener('change', () => {
+    if (photoInput.files.length > 0) {
+        // Display the name of the chosen file
+        fileNameDisplay.textContent = photoInput.files[0].name;
+    } else {
+        fileNameDisplay.textContent = '';
+    }
+});
+ 
+ 
