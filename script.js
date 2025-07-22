@@ -1,42 +1,43 @@
-document.getElementById('photoInput').addEventListener('change', function (e) { 
-    const file = e.target.files[0] ;
-    if (file) return ;
+// --- Theme Switcher Logic ---
+const themeToggle = document.getElementById('theme-toggle');
+const body = document.body;
 
-    EXIF.getData(file, function() {
-        const lat =EXIF.getTag(this, "GPSLatitude");
-        const lon = EXIF.getTAg(this, "GPSLongitude");
-        const latRef = EXIF.getTag(this, "GPSLatitudeRef") || "N";
-        const lonRef = EXIF.getTag(this, "GPSLongitudeRef") || "E";
-
-        if(lat && lon && latRef && lonRef) {
-            const toDecimal = (d, ref) =>{
-                let decimal = d[0] + d[1] / 60 + d[2] / 3600;
-                return (ref === 'S' || ref === 'W') ? -decimal : decimal;
-            };
-
-            const latDecimal = toDecimal(lat, latRef);
-            const lonDecimal = toDecimal(lon, lonRef);
-
-            document.getElementById('coords').textContent = 'coordinate : ${latDecimal.toFixed(5)},  ${lonDecimal.toFixed(5)';
-
-            L.marker([latDecimal, lonDecimal]).addTo(map)
-            .bindPopup("Posizione estratta della photo").openPopup();
-
-        }  else {
-            alert("L'immagine non contienedi dati GPS.");
-        }
-    });
- });
- 
-Window.addEventListener('DOMContentLoaded', () =>{
-    const banner = document.getElementById('consent-banner');
-    const consent = localStorage.getItem('geoConsent');
-    
-    if ( !consent) {
-        banner.style.display = 'block';
+// Function to apply the saved theme on page load
+function applySavedTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        themeToggle.checked = true;
+    } else {
+        body.classList.remove('dark-mode');
+        themeToggle.checked = false;
     }
-    document.getElementById('accept-consent').addEventListener('click', () => {
-        localStorage.setItem('geoConsent', 'accepted');
-        banner.style.display = 'none';
-    });
+}
+
+// Event listener for the theme toggle
+themeToggle.addEventListener('change', () => {
+    if (themeToggle.checked) {
+        body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark'); // Save preference
+    } else {
+        body.classList.remove('dark-mode');
+        localStorage.setItem('theme', 'light'); // Save preference
+    }
+});
+
+// Apply theme when the page is loaded
+document.addEventListener('DOMContentLoaded', applySavedTheme);
+
+
+// --- File Input Logic ---
+const photoInput = document.getElementById('photo-input');
+const fileNameDisplay = document.getElementById('file-name');
+
+photoInput.addEventListener('change', () => {
+    if (photoInput.files.length > 0) {
+        // Display the name of the chosen file
+        fileNameDisplay.textContent = photoInput.files[0].name;
+    } else {
+        fileNameDisplay.textContent = '';
+    }
 });
