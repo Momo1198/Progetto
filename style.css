@@ -14,7 +14,7 @@
     --switch-bg: #c1c1c1;
     --icon-color: #fdb813; /* Sun color */
 }
- 
+
 body.dark-mode {
     /* Dark Theme */
     --bg-color: #121212;
@@ -30,7 +30,7 @@ body.dark-mode {
     --switch-bg: #0d6efd;
     --icon-color: #f5f3ce; /* Moon color */
 }
- 
+
 /* 2. General Styles */
 body {
     font-family: 'Inter', sans-serif;
@@ -42,19 +42,19 @@ body {
     min-height: 100vh;
     margin: 0;
     transition: background-color 0.3s, color 0.3s;
- 
+
     /*
-    =========================================
-    ===> HNA FIN KAYNA TSOUIRA DYAL NASA <===
-    =========================================
+    ========================================================
+    ===> HADA HOWA L'LIEN L'JDID LI KHASS YKHDEM 100% <===
+    ========================================================
     */
-    background-image: url('https://science.nasa.gov/wp-content/uploads/2023/11/m31-uv-optical-16x9-1.jpg');
-   
+    background-image: url('https://images.unsplash.com/photo-1506443432602-ac2fcd6f54e0?q=80&w=2070');
+    
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
 }
- 
+
 /* L'overlay li kayji foq tsouira bach l'ktaba tban mezyan */
 body::before {
     content: '';
@@ -65,7 +65,7 @@ body::before {
     z-index: -1;
     transition: background-color 0.3s;
 }
- 
+
 /* L'baqi dyal l'code bqa nafsso */
 .container {
     background-color: var(--card-bg-color);
@@ -109,27 +109,27 @@ button {
 button:hover { background-color: var(--button-hover-bg); }
 button:active { transform: scale(0.98); }
 #result-container { margin-top: 2rem; font-size: 1.1rem; word-wrap: break-word; }
- 
+
 /* 3. Animated Theme Switcher Styles */
 .theme-switcher-container {
     position: absolute;
     top: 20px;
     right: 20px;
 }
- 
+
 .theme-switcher {
     position: relative;
     display: inline-block;
     width: 60px;
     height: 34px;
 }
- 
+
 .theme-switcher input {
     opacity: 0;
     width: 0;
     height: 0;
 }
- 
+
 .slider {
     position: absolute;
     cursor: pointer;
@@ -141,7 +141,7 @@ button:active { transform: scale(0.98); }
     transition: .4s;
     border-radius: 34px;
 }
- 
+
 .icon {
     position: absolute;
     content: "";
@@ -154,56 +154,12 @@ button:active { transform: scale(0.98); }
     border-radius: 50%;
     box-shadow: 0 0 2px var(--icon-color);
 }
- 
+
 input:checked + .slider .icon {
     transform: translateX(26px) rotate(360deg);
     box-shadow: inset -10px -2px 0 0 var(--icon-color);
     background-color: transparent;
 }
- 
- 
-// --- Theme Switcher Logic ---
-const themeToggle = document.getElementById('theme-toggle');
-const body = document.body;
- 
-// Function to apply the saved theme on page load
-function applySavedTheme() {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        body.classList.add('dark-mode');
-        themeToggle.checked = true;
-    } else {
-        body.classList.remove('dark-mode');
-        themeToggle.checked = false;
-    }
-}
- 
-// Event listener for the theme toggle
-themeToggle.addEventListener('change', () => {
-    if (themeToggle.checked) {
-        body.classList.add('dark-mode');
-        localStorage.setItem('theme', 'dark'); // Save preference
-    } else {
-        body.classList.remove('dark-mode');
-        localStorage.setItem('theme', 'light'); // Save preference
-    }
-});
- 
-// Apply theme when the page is loaded
-document.addEventListener('DOMContentLoaded', applySavedTheme);
- 
- 
-// --- File Input Logic ---
-const photoInput = document.getElementById('photo-input');
-const fileNameDisplay = document.getElementById('file-name');
- 
-photoInput.addEventListener('change', () => {
-    if (photoInput.files.length > 0) {
-        // Display the name of the chosen file
-        fileNameDisplay.textContent = photoInput.files[0].name;
-    } else {
-        fileNameDisplay.textContent = '';
-    }
-});
+
  
  
