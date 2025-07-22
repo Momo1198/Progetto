@@ -1,27 +1,65 @@
 <!DOCTYPE html>
-<html lang="it">
-    <head>
-        <meta charset="UTF-8">
-        <title>Geolocalizzazione da una photo</title>
-        <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    </head>
-    <body>
-        <div class="container">
-            <h1>Geolocalizzazione di una photo</h1>
-            <input type="file" id="photoinput" accept="image/*">
-            <p id="map"></p>
-            <div id="map"></div>
-            <input type="file" id="photoinput" />
-            <p id="coords">Coordinate : --</p>
-        </div>
-        <div id="consent-banner" class="banner">
-            <p>Questo sito usa la Geolocalizzazionee tratta i metadati dei vostri immagini. Continuando, accetti la nostra politica sulla privacy</p>
-            <button id="accept-consent">Accettare</button>
-        </div>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoPhoto - Get Photo Location</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- This special syntax correctly links the CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
-        <script src="exif.js"></script>
-        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-        <script src="script.js"></script>
-    </body>
+</head>
+<body>
+
+    <div class="theme-switcher-container">
+        <label class="theme-switcher">
+            <input type="checkbox" id="theme-toggle">
+            <div class="slider">
+                <div class="icon"></div>
+            </div>
+        </label>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>📍 GeoPhoto</h1>
+            <p>Upload a photo with GPS data to get a Google Maps link.</p>
+        </header>
+
+        <main>
+            <!-- The form now posts to the same page -->
+            <form id="upload-form" action="/" method="post" enctype="multipart/form-data">
+                <label for="photo-input" class="file-label">
+                    <span>📷 Choose a photo...</span>
+                    <span id="file-name"></span>
+                </label>
+                <input id="photo-input" type="file" name="photo" accept="image/jpeg" required>
+                <button type="submit">Get Link</button>
+            </form>
+            
+            <div id="result-container">
+                <!-- 
+                    This special code checks if Python sent a link or an error 
+                    and displays the correct message.
+                -->
+                {% if map_link %}
+                    <p class="success-message"><strong>Success! Here is your link:</strong></p>
+                    <a href="{{ map_link }}" target="_blank">{{ map_link }}</a>
+                {% endif %}
+                {% if error %}
+                    <p class="error-message"><strong>Error:</strong> {{ error }}</p>
+                {% endif %}
+            </div>
+        </main>
+    </div>
+
+    <!-- This special syntax correctly links the JavaScript file -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
 </html>
+
+
