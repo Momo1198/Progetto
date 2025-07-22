@@ -1,165 +1,590 @@
-/* 1. CSS Variables for Theming */
+/* Root CSS Variables for Theme Management */
 :root {
-    /* Light Theme (Default) */
-    --bg-color: #f0f2f5;
-    --bg-image-overlay: rgba(240, 242, 245, 0.8);
-    --card-bg-color: #ffffff;
-    --text-primary: #1c1e21;
-    --text-secondary: #606770;
-    --button-bg: #007bff;
-    --button-hover-bg: #0056b3;
-    --input-bg: #e9ecef;
-    --input-hover-bg: #dde1e4;
-    --shadow-color: rgba(0, 0, 0, 0.1);
-    --switch-bg: #c1c1c1;
-    --icon-color: #fdb813; /* Sun color */
+    /* Light Theme Colors (Initial state is a dark theme) */
+    --bg-color: #0f0f23;
+    --container-bg: rgba(255, 255, 255, 0.1);
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --text-color: #ffffff;
+    --text-secondary: #b8b8cc;
+    --accent-color: #00d2ff;
+    --accent-hover: #0099cc;
+    --success-color: #00ff88;
+    --error-color: #ff4757;
+    --warning-color: #ffa502;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.4);
+
+    /* Animation Variables */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.2s ease;
 }
 
+/* Dark Theme Variables (This is an alternative theme) */
 body.dark-mode {
-    /* Dark Theme */
-    --bg-color: #121212;
-    --bg-image-overlay: rgba(18, 18, 18, 0.85);
-    --card-bg-color: #1e1e1e;
-    --text-primary: #e4e6eb;
-    --text-secondary: #b0b3b8;
-    --button-bg: #0d6efd;
-    --button-hover-bg: #0a58ca;
-    --input-bg: #3a3b3c;
-    --input-hover-bg: #4e4f50;
-    --shadow-color: rgba(0, 0, 0, 0.4);
-    --switch-bg: #0d6efd;
-    --icon-color: #f5f3ce; /* Moon color */
+    --bg-color: #1a1a2e;
+    --container-bg: rgba(0, 0, 0, 0.4);
+    --card-bg: rgba(0, 0, 0, 0.3);
+    --text-color: #eee;
+    --text-secondary: #aaa;
+    --border-color: rgba(255, 255, 255, 0.05);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.8);
 }
 
-/* 2. General Styles */
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-primary);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+/* Base Styles and Reset */
+* {
     margin: 0;
-    transition: background-color 0.3s, color 0.3s;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    /*
-    ========================================================
-    ===> HADA HOWA L'LIEN L'JDID LI KHASS YKHDEM 100% <===
-    ========================================================
-    */
-    background-image: url('https://images.unsplash.com/photo-1506443432602-ac2fcd6f54e0?q=80&w=2070');
-    
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    line-height: 1.6;
+    transition: var(--transition);
+
+    /* Space Background */
+    background-image:
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 119, 255, 0.2) 0%, transparent 50%),
+        url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
 }
 
-/* L'overlay li kayji foq tsouira bach l'ktaba tban mezyan */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: var(--bg-image-overlay);
-    z-index: -1;
-    transition: background-color 0.3s;
+/* Container Layout */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
-/* L'baqi dyal l'code bqa nafsso */
-.container {
-    background-color: var(--card-bg-color);
-    padding: 2rem 3rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 25px var(--shadow-color);
-    text-align: center;
-    width: 90%;
-    max-width: 500px;
-    border: 1px solid var(--input-bg);
-    transition: background-color 0.3s, border 0.3s;
-}
-header h1, header p, #result-container a { color: var(--text-primary); }
-input[type="file"] { display: none; }
-.file-label {
-    background-color: var(--input-bg);
-    color: var(--text-secondary);
-    padding: 12px 20px;
-    border-radius: 8px;
+/* Theme Toggle Button */
+.theme-toggle {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    background: var(--container-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
     cursor: pointer;
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin-bottom: 1.5rem;
-    transition: background-color 0.2s;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+    z-index: 1000;
+    overflow: hidden;
 }
-.file-label:hover { background-color: var(--input-hover-bg); }
-#file-name { font-style: italic; font-size: 0.9em; margin-left: 8px; }
-button {
-    background-color: var(--button-bg);
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-hover);
+}
+
+.theme-toggle .sun-icon,
+.theme-toggle .moon-icon {
+    position: absolute;
+    transition: var(--transition);
+}
+
+.theme-toggle .sun-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+.theme-toggle .moon-icon {
+    opacity: 0;
+    transform: rotate(180deg) scale(0.5);
+}
+
+body.dark-mode .theme-toggle .sun-icon {
+    opacity: 0;
+    transform: rotate(-180deg) scale(0.5);
+}
+
+body.dark-mode .theme-toggle .moon-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+/* Header Styles */
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--accent-color), #ff6b6b, #4ecdc4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.title i {
+    color: var(--accent-color);
+    -webkit-text-fill-color: var(--accent-color);
+}
+
+.description {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Main Content */
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Upload Section */
+.upload-section {
+    background: var(--container-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 3rem;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.upload-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* File Input Styling */
+.file-input-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+}
+
+input[type="file"] {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.file-input-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    border: 2px dashed var(--border-color);
+    border-radius: 15px;
+    background: var(--card-bg);
+    cursor: pointer;
+    transition: var(--transition);
+    min-height: 150px;
+}
+
+.file-input-label:hover {
+    border-color: var(--accent-color);
+    background: var(--container-bg);
+    transform: translateY(-2px);
+}
+
+.file-input-label i {
+    font-size: 3rem;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.file-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.file-info {
+    margin-top: 1rem;
+    padding: 0.8rem;
+    background: var(--card-bg);
+    border-radius: 10px;
+    color: var(--text-secondary);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: var(--transition);
+}
+
+.file-info.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Submit Button */
+.submit-btn {
+    background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
     color: white;
     border: none;
-    padding: 14px 25px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 500;
+    padding: 1rem 3rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    width: 100%;
-    transition: background-color 0.2s, transform 0.1s;
-}
-button:hover { background-color: var(--button-hover-bg); }
-button:active { transform: scale(0.98); }
-#result-container { margin-top: 2rem; font-size: 1.1rem; word-wrap: break-word; }
-
-/* 3. Animated Theme Switcher Styles */
-.theme-switcher-container {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    box-shadow: var(--shadow);
 }
 
-.theme-switcher {
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+/* Results Section */
+.results-section {
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.result {
+    background: var(--container-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 3rem;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+    animation: fadeInScale 0.6s ease-out;
+}
+
+.result.success {
+    border-color: rgba(0, 255, 136, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 255, 136, 0.1);
+}
+
+.result.error {
+    border-color: rgba(255, 71, 87, 0.3);
+    box-shadow: 0 8px 32px rgba(255, 71, 87, 0.1);
+}
+
+.result-title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.result.success .result-title {
+    color: var(--success-color);
+}
+
+.result.error .result-title {
+    color: var(--error-color);
+}
+
+/* Location Details */
+.location-details {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--card-bg);
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
+}
+
+.location-details p {
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+}
+
+.coordinates {
+    font-family: 'Courier New', monospace;
+    color: var(--accent-color);
+}
+
+/* Map Actions */
+.map-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.map-link,
+.copy-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+}
+
+.map-link {
+    background: linear-gradient(135deg, var(--success-color), #00cc70);
+    color: white;
+}
+
+.copy-btn {
+    background: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+}
+
+.map-link:hover,
+.copy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* Error Help */
+.error-message {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    color: var(--text-secondary);
+}
+
+.error-help {
+    padding: 2rem;
+    background: var(--card-bg);
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
+}
+
+.error-help h3 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.error-help ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.error-help li {
+    padding: 0.5rem 0;
+    padding-left: 2rem;
     position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
+    color: var(--text-secondary);
 }
 
-.theme-switcher input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
+.error-help li::before {
+    content: "•";
+    color: var(--accent-color);
     position: absolute;
-    cursor: pointer;
+    left: 0.5rem;
+}
+
+/* Welcome Message */
+.welcome-message {
+    text-align: center;
+    background: var(--container-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 3rem;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+}
+
+.welcome-message h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.info-card {
+    padding: 2rem;
+    background: var(--card-bg);
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+.info-card i {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.info-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.info-card p {
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding: 2rem 0;
+    color: var(--text-secondary);
+    animation: fadeIn 0.8s ease-out 0.6s both;
+}
+
+.footer p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    font-size: 0.95rem;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--switch-bg);
-    transition: .4s;
-    border-radius: 34px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
-.icon {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: var(--icon-color);
-    transition: .4s;
-    border-radius: 50%;
-    box-shadow: 0 0 2px var(--icon-color);
+.loading-overlay.active {
+    opacity: 1;
+    visibility: visible;
 }
 
-input:checked + .slider .icon {
-    transform: translateX(26px) rotate(360deg);
-    box-shadow: inset -10px -2px 0 0 var(--icon-color);
-    background-color: transparent;
+.loading-spinner {
+    text-align: center;
+    color: white;
 }
+
+.loading-spinner i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+}
+
+.loading-spinner p {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+/* Toast Notification */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--success-color);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 10px; /* Corrected property */
+    box-shadow: var(--shadow);
+    opacity: 0;
+    transform: translateY(20px);
+    visibility: hidden;
+    transition: var(--transition);
+    z-index: 1001;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+/* Keyframe Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 
  
  
